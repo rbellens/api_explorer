@@ -2,7 +2,7 @@ part of discovery_v1_api;
 
 abstract class Client extends ClientBase {
   core.String basePath = "/api/discovery/v1/";
-  core.String rootUrl = "http://localhost:8080/";
+  core.String rootUrl = "/";
 
   //
   // Resources
