@@ -1,0 +1,88 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="json_input.html">
+
+<polymer-element name="method-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      table {
+        width: 100%;
+      }
+      table * {
+        font-size: 16px;
+        font-family: Arial,sans-serif;
+      }
+      tr td {
+        padding: 10px;
+        white-space: nowrap;
+        vertical-align: top;
+      }
+      tr td:first-child {
+        text-align: right;
+      }
+
+      paper-button {
+        background: #357ae8;
+        color: white;
+        font-weight: bold;
+        padding: 0 30px;
+      }
+
+      td[required] {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+
+    <form id="form">
+      <table>
+        <tr template repeat="{{p in method.parameters.keys}}">
+          <td required?="{{method.parameters[p].required}}">{{p}}</td>
+          <td><input type="text" value="{{queryParameters[p]}}"></td>
+          <td>{{method.parameters[p].description}} ({{method.parameters[p].type}})</td>
+        </tr>
+        <tr template if="{{method.request!=null}}">
+          <td>Request body</td>
+          <td colspan="2">
+            <json-input service="{{service}}" schema="{{service.schemas[method.request.$ref]}}" value="{{bodyRequest}}"></json-input>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <paper-button on-click="{{execute}}">execute</paper-button>
+          </td>
+        </tr>
+      </table>
+
+    </form>
+
+    <template if="{{request!=null}}">
+      <h3>Request</h3>
+      {{request.method}} {{request.url}}
+      <br/>
+      <br/>
+      {{request.body}}
+    </template>
+    <template if="{{response!=null}}">
+      <h3>Response</h3>
+      {{response.statusCode}} {{response.reasonPhrase}}
+      <br/>
+      <br/>
+      <pre class="prettyprint" id="response">{{prettyJson}}</pre>
+
+    </template>
+
+  </template>
+  <script type="application/dart" src="method_form.dart"></script>
+</polymer-element>

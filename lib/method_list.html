@@ -1,0 +1,60 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<polymer-element name="method-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      table {
+        border-top-style: solid;
+        border-top-width: 1px;
+        border-color: #e5e5e5;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table * {
+        font-size: 13px;
+        font-family: Arial,sans-serif;
+      }
+      tr:hover td:first-child {
+        border-left-style: solid;
+        border-left-width: 3px;
+        border-left-color: #e5e5e5;
+      }
+      tr td:first-child {
+        border-left-style: solid;
+        border-left-width: 3px;
+        border-left-color: transparent;
+      }
+      tr:hover td {
+        background-color: #f1f1f1;
+        cursor: pointer;
+      }
+      tr td {
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-color: #e5e5e5;
+        padding: 10px;
+        white-space: nowrap;
+        vertical-align: top;
+      }
+    </style>
+
+    <table>
+      <tr template repeat="{{m in methodList}}" data-href="{{m.id}}" on-click="{{gotoMethod}}">
+        <td>{{m.id}}</td>
+        <td>{{m.description}}</td>
+      </tr>
+    </table>
+
+  </template>
+  <script type="application/dart" src="method_list.dart"></script>
+</polymer-element>
