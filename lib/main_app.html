@@ -1,0 +1,64 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<link rel="import" href="directory_list.html">
+<link rel="import" href="method_list.html">
+<link rel="import" href="method_form.html">
+<link rel="import" href="../../packages/core_elements/core_animated_pages.html">
+
+<polymer-element name="main-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      h4 a {
+        text-decoration: none;
+        color: gray;
+      }
+
+      .heading {
+        border-bottom: 1px solid gray;
+      }
+    </style>
+
+
+    <div class="heading">
+      <h2>API Explorer</h2>
+
+      <h4>
+        <a href="#">services</a>
+        <template if="{{route.name!='directory'}}">
+          &gt; <a _href="#p/{{restDescription.name}}/{{restDescription.version}}">{{restDescription.name}}</a>
+        </template>
+        <template if="{{route.name=='method'}}">
+          &gt; <a _href="#p/{{restDescription.name}}/{{restDescription.version}}/{{method.id}}">{{method.id}}</a>
+        </template>
+      </h4>
+
+    </div>
+
+    <core-animated-pages id="pages" selected="{{route.name}}"
+                         valueattr="path"
+                         transitions="slide-from-right"
+                         >
+      <section path="directory">
+        <directory-list directoryList="{{directoryList}}"></directory-list>
+      </section>
+      <section path="service">
+        <method-list methodList="{{methods.values}}"></method-list>
+      </section>
+      <section path="method">
+        <method-form method="{{method}}" service="{{restDescription}}"></method-form>
+      </section>
+    </core-animated-pages>
+
+
+  </template>
+  <script type="application/dart" src="main_app.dart"></script>
+</polymer-element>

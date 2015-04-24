@@ -1,0 +1,44 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../packages/polymer/polymer.html">
+<link rel="import" href="../../packages/paper_elements/paper_button.html">
+<link rel="import" href="../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../packages/core_elements/core_icons.html">
+
+<polymer-element name="json-input">
+  <template>
+    <style>
+      :host {
+        display: inline-flex;
+      }
+      core-icon {
+        color: red;
+        cursor: pointer;
+      }
+      input {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+    </style>
+    <template if="{{schema.type=='object'}}">
+      <pre>
+  {
+    <template repeat="{{key in value.keys}}">
+      "{{key}}":<json-input service="{{service}}" schema="{{schema.properties[key]}}" value="{{value[key]}}"></json-input><core-icon icon="clear" on-click="{{removeProperty}}" data-property="{{key}}"></core-icon>
+    </template>
+    <select on-change="{{addProperty}}">
+      <option value="-- add a property --">-- add a property --</option>
+      <option template repeat="{{p in schema.properties.keys}}" value="{{p}}" hidden?="{{value.keys.contains(p)}}">{{p}}</option>
+    </select>
+  }
+      </pre>
+    </template>
+    <template if="{{schema.type=='string'}}">"<input value="{{value}}">"</template>
+  </template>
+  <script type="application/dart" src="json_input.dart"></script>
+</polymer-element>
